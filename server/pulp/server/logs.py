@@ -53,11 +53,11 @@ def start_logging(*args, **kwargs):
     root_logger.setLevel(log_level)
 
     # Set up our handler and add it to the root logger
-    if not os.path.exists(LOG_PATH):
-        print >> sys.stderr, "Unable to access to log, {log_path}.".format(log_path=LOG_PATH)
-        sys.exit(os.EX_UNAVAILABLE)
+    #if not os.path.exists(LOG_PATH):
+        #print >> sys.stderr, "Unable to access to log, {log_path}.".format(log_path=LOG_PATH)
+        #sys.exit(os.EX_UNAVAILABLE)
 
-    handler = CompliantSysLogHandler(address=LOG_PATH, facility=CompliantSysLogHandler.LOG_DAEMON)
+    handler = CompliantSysLogHandler()
     formatter = logging.Formatter(LOG_FORMAT_STRING)
     handler.setFormatter(formatter)
     root_logger.handlers = []
@@ -84,7 +84,7 @@ def stop_logging():
     root_logger.handlers = []
 
 
-class CompliantSysLogHandler(logging.handlers.SysLogHandler):
+class CompliantSysLogHandler(logging.StreamHandler):
     """
     RFC 5426[0] recommends that we limit the length of our log messages. RFC 3164[1] requires that
     we only include visible characters and spaces in our log messages. Though RFC 3164 is obsoleted
@@ -159,7 +159,7 @@ class CompliantSysLogHandler(logging.handlers.SysLogHandler):
                 # In Python 2.6 and earlier, the SysLogHandler is not a new-style class. This means
                 # that super() cannot be used, so we will just call the SysLogHandler's emit()
                 # directly.
-                logging.handlers.SysLogHandler.emit(self, new_record)
+                logging.StreamHandler.emit(self, new_record)
 
     def _calculate_formatter_buffer(self, record):
         """
