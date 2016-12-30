@@ -24,7 +24,6 @@ LOGGING = {
     },
     'handlers': {
         'syslog': {
-            'address': pulp_logs.LOG_PATH,
             'facility': pulp_logs.CompliantSysLogHandler.LOG_DAEMON,
             'class': 'pulp.server.logs.CompliantSysLogHandler',
             'formatter': 'simple',

@@ -53,11 +53,11 @@ def start_logging(*args, **kwargs):
     root_logger.setLevel(log_level)
 
     # Set up our handler and add it to the root logger
-    if not os.path.exists(LOG_PATH):
-        print >> sys.stderr, "Unable to access to log, {log_path}.".format(log_path=LOG_PATH)
-        sys.exit(os.EX_UNAVAILABLE)
+    #if not os.path.exists(LOG_PATH):
+        #print >> sys.stderr, "Unable to access to log, {log_path}.".format(log_path=LOG_PATH)
+        #sys.exit(os.EX_UNAVAILABLE)
 
-    handler = CompliantSysLogHandler(address=LOG_PATH, facility=CompliantSysLogHandler.LOG_DAEMON)
+    handler = CompliantSysLogHandler(facility=CompliantSysLogHandler.LOG_DAEMON)
     formatter = logging.Formatter(LOG_FORMAT_STRING)
     handler.setFormatter(formatter)
     root_logger.handlers = []
